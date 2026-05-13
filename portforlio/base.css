@@ -1,0 +1,79 @@
+:root {
+  --primary-color: #000 ;
+  --primary-contrast-color: #fff;
+  --font-family: "sora";
+  --text-color: #000;
+  --text-muted-color: #71717a;
+  --border-radius: 4px;
+  --background-default: #fff;
+  --background-paper: #fff;
+    --text-primary: #000;
+}
+html{
+    scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--text-color);
+}
+
+.text-muted {
+  color: var(--text-muted-color);
+}
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 12px;
+  border: 1px solid var(--primary-color);
+  min-width: 70px;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+.btn.btn--primary {
+  background-color: var(--primary-color);
+  color: var(--primary-contrast-color);
+}
+.btn.btn--primary:hover {
+  background-color: rgb(30, 30, 30);
+}
+
+.btn > .lucide {
+  width: 20px;
+  height: 20px;
+}
+
+.btn.btn--square {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  min-width: unset;
+}
+
+
+.text-outline {
+     color: #fff;
+  text-shadow:
+    -1px 0 var(--primary-color),
+     1px 0 var(--primary-color),
+     0 -1px var(--primary-color),
+     0 1px var(--primary-color);
+}
+
+
+.container {
+  width: min(1200px, 100% - 32px);
+  margin-inline: auto;
+}
+
+section + section {
+  margin-top: 54px;
+}
