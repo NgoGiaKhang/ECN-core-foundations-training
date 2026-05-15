@@ -35,13 +35,13 @@ export class App {
     window.addEventListener("keydown", (e) => {
       const key = e.key;
 
-      // số 0-9
+      // number 0-9
       if (!isNaN(key)) {
         this.handleNumberClick(key);
         return;
       }
 
-      // dấu chấm
+      // dot
       if (key === ".") {
         this.handleNumberClick(DECIMAL_SEPARATOR);
         return;
@@ -53,7 +53,7 @@ export class App {
         return;
       }
 
-      // enter = tính toán
+      // enter = calc
       if (key === "Enter") {
         this.handleEqualClick();
         return;
