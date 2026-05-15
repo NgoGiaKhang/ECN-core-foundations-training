@@ -62,7 +62,6 @@ export class TodoApp {
     this.elements.filters.forEach((btn) => {
       btn.addEventListener("click", () => {
         this.state.filter = btn.dataset.status;
-        console.log(btn.dataset.status);
         
         this.elements.filters.forEach((b) =>
           b.classList.remove("todo__filter--active"),
