@@ -132,7 +132,7 @@ export class App {
     this.number1.subscribe(updateDisplay);
     this.number2.subscribe(updateDisplay);
     this.operator.subscribe(updateDisplay);
-    this.error.subscribe(updateDisplay)
+    this.error.subscribe(updateDisplay);
   }
 
   initExpression() {
@@ -196,21 +196,36 @@ export class App {
   }
 
   handleOperatorClick(operator) {
-    
-    if (this.number2) {
+    // If number2 exists, compute result first before applying new operator
+    if (this.number2.value) {
       this.handleEqualClick();
     }
 
-    if (this.result.value) {
+    // If there is a result, move it to number1 and reset state
+    if (this.result.value != null) {
       const temp = this.result.value;
       this.clear();
       this.number1.value = temp;
     }
-    if (this.number1.value) {
-      this.operator.value = operator;
-    }
-  }
 
+    // If number1 is empty, only allow "-" to start a negative number
+    if (!this.number1.value) {
+      if (operator === "-") {
+        this.number1.value = "-";
+      }
+      return;
+    }
+
+    // Allow negative number for number2 when operator is already set
+    if (this.operator.value && !this.number2.value && operator === "-") {
+      this.number2.value = "-";
+      return;
+    }
+
+    // Set operator normally (+, *, /, -)
+    this.operator.value = operator;
+  }
+  
   handleEqualClick() {
     if (!this.number1.value || !this.number2.value) {
       return;
@@ -225,7 +240,7 @@ export class App {
 
       this.addHistory();
     } catch (e) {
-      this.error.value = e.message
+      this.error.value = e.message;
     }
   }
 
@@ -279,7 +294,7 @@ export class App {
     this.number2.value = "";
     this.operator.value = null;
     this.result.value = null;
-    this.error.value = null
+    this.error.value = null;
   }
 }
 
