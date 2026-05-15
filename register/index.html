@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register Form</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+
+</head>
+
+<body>
+
+    <div class="register">
+        <form class="register__form" id="form">
+
+            <h1 class="register__title">Create account</h1>
+
+            <div class="register__group">
+                <label class="register__label">Full name</label>
+                <input class="register__input" name="name" type="text" placeholder="John Doe" />
+                <span class="register__error">Name is required</span>
+            </div>
+
+            <div class="register__group">
+                <label class="register__label">Email</label>
+                <input class="register__input" name="email" type="email" placeholder="name@example.com" />
+                <span class="register__error">Invalid email</span>
+            </div>
+
+            <div class="register__group">
+                <label class="register__label">Phone</label>
+                <input class="register__input" name="phone" type="tel" placeholder="+84 123 456 789" />
+                <span class="register__error">Invalid phone</span>
+            </div>
+
+            <div class="register__group">
+                <label class="register__label">Password</label>
+                <input class="register__input" name="password" type="password" placeholder="••••••••" />
+                <div class="strength">
+                    <div class="strength__bar"></div>
+                </div>
+                <span class="register__error">Password too short</span>
+            </div>
+
+            <div class="register__group">
+                <label class="register__label">Confirm password</label>
+                <input class="register__input" name="confirm" type="password" placeholder="••••••••" />
+                <span class="register__error">Password not match</span>
+            </div>
+
+            <button class="register__button" type="submit">Create account</button>
+
+            <p class="register__footer">
+                Already have an account? <a href="#">Sign in</a>
+            </p>
+
+        </form>
+    </div>
+
+    <script type="module">
+        import { Validator, required, email, phone, password } from './validator.js'
+        const v = new Validator('#form', ".register__error")
+        v.addRule("name", required());
+
+        v.addRule("email", required(), email());
+
+        v.addRule("phone", required(), phone());
+
+        v.addRule("password", required(), password());
+
+        v.addRule(
+            "confirm",
+            required(),
+            (v, get) => v !== get("password") && "Password not match"
+        );
+        v.onSubmit = (values)  => console.log(values);
+        
+
+        const passwordInput = document.querySelector("input[name='password']");
+
+        export const passwordStrength = (v) => {
+            let score = 0;
+            if (!v) return 0;
+            if (v.length >= 8) score++;
+            if (/[A-Z]/.test(v)) score++;
+            if (/[0-9]/.test(v)) score++;
+            if (/[^A-Za-z0-9]/.test(v)) score++;
+            return score;
+        };
+
+
+        const updateStrength = (passwordValue) => {
+            const bar = document.querySelector(".strength__bar");
+            const score = passwordStrength(passwordValue);
+
+            const percent = (score / 4) * 100;
+
+            bar.style.width = percent + "%";
+
+            if (score <= 1) bar.style.background = "#ef4444";
+            else if (score === 2) bar.style.background = "#f59e0b";
+            else if (score === 3) bar.style.background = "#3b82f6";
+            else bar.style.background = "#22c55e";
+        }
+
+        passwordInput.addEventListener("input", (e) => {
+            updateStrength(e.target.value);
+        });
+
+    </script>
+
+</body>
+
+</html>
