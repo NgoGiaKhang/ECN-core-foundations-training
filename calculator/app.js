@@ -13,6 +13,7 @@ export class App {
     this.number1 = new Property("");
     this.number2 = new Property("");
     this.result = new Property(null);
+    this.error = new Property("");
     this.history = [];
     this.calculator = new Calculator();
     this.init();
@@ -131,6 +132,7 @@ export class App {
     this.number1.subscribe(updateDisplay);
     this.number2.subscribe(updateDisplay);
     this.operator.subscribe(updateDisplay);
+    this.error.subscribe(updateDisplay)
   }
 
   initExpression() {
@@ -194,6 +196,7 @@ export class App {
   }
 
   handleOperatorClick(operator) {
+    
     if (this.number2) {
       this.handleEqualClick();
     }
@@ -213,13 +216,17 @@ export class App {
       return;
     }
 
-    this.result.value = this.calculator.calculate(
-      this.operator.value,
-      Number(this.number1.value),
-      Number(this.number2.value),
-    );
+    try {
+      this.result.value = this.calculator.calculate(
+        this.operator.value,
+        Number(this.number1.value),
+        Number(this.number2.value),
+      );
 
-    this.addHistory();
+      this.addHistory();
+    } catch (e) {
+      this.error.value = e.message
+    }
   }
 
   addHistory() {
@@ -250,6 +257,10 @@ export class App {
   }
 
   displayString() {
+    if (this.error.value) {
+      return this.error.value;
+    }
+
     if (this.result.value != null) {
       return this.result.value;
     }
@@ -268,6 +279,7 @@ export class App {
     this.number2.value = "";
     this.operator.value = null;
     this.result.value = null;
+    this.error.value = null
   }
 }
 

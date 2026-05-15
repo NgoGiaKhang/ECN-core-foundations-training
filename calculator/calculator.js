@@ -55,7 +55,7 @@ export class Calculator {
     this.assertNumber(number2);
 
     if (number2 === 0) {
-      throw new Error("Cannot divide by zero");
+      throw new Error("Can't divide by 0");
     }
 
     const result = this.round(number1 / number2);
