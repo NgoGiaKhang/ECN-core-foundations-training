@@ -61,21 +61,21 @@
     <script type="module">
         import { Validator, required, email, phone, password } from './validator.js'
         const v = new Validator('#form', ".register__error")
-        v.addRule("name", required());
+        v.addRule("name", required("Name is required"));
 
-        v.addRule("email", required(), email());
+        v.addRule("email", required("Email is required"), email());
 
-        v.addRule("phone", required(), phone());
+        v.addRule("phone", required("Phone is required"), phone());
 
-        v.addRule("password", required(), password());
+        v.addRule("password", required("Password is required"), password());
 
         v.addRule(
             "confirm",
             required(),
             (v, get) => v !== get("password") && "Password not match"
         );
-        v.onSubmit = (values)  => console.log(values);
-        
+        v.onSubmit = (values) => console.log(values);
+
 
         const passwordInput = document.querySelector("input[name='password']");
 
@@ -93,11 +93,8 @@
         const updateStrength = (passwordValue) => {
             const bar = document.querySelector(".strength__bar");
             const score = passwordStrength(passwordValue);
-
             const percent = (score / 4) * 100;
-
             bar.style.width = percent + "%";
-
             if (score <= 1) bar.style.background = "#ef4444";
             else if (score === 2) bar.style.background = "#f59e0b";
             else if (score === 3) bar.style.background = "#3b82f6";
